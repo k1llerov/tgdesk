@@ -11,7 +11,7 @@
 
 <p align="center">
   <a href="https://github.com/k1llerov/tgdesk/releases/latest"><img src="https://img.shields.io/github/v/release/k1llerov/tgdesk?style=for-the-badge&label=%F0%9F%93%A5%20Download&color=0088cc" alt="Download"></a>&nbsp;
-  <a href="https://github.com/k1llerov/tgdesk/actions/workflows/build.yml"><img src="https://img.shields.io/github/actions/workflow/status/k1llerov/tgdesk/build.yml?style=for-the-badge&label=Build" alt="Build"></a>&nbsp;
+  <a href="https://github.com/k1llerov/tgdesk/actions/workflows/build.yml"><img src="https://img.shields.io/github/actions/workflow/status/k1llerov/tgdesk/build.yml?branch=main&style=for-the-badge&label=Build" alt="Build"></a>&nbsp;
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="MIT"></a>&nbsp;
   <a href="README.md"><img src="https://img.shields.io/badge/lang-Русский-lightgrey?style=for-the-badge" alt="Русский"></a>
 </p>
