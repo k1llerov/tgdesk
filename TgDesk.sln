@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bot", "bot", "{D3E09356-6418-F4F5-DDE9-09D519799B74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TgDeskBot", "bot\TgDeskBot.csproj", "{C87D2E48-14A9-40DA-BA93-B14B3868B66E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0AB3BF05-4346-4AA6-1389-037BE0695223}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TgDesk.Tests", "tests\TgDesk.Tests\TgDesk.Tests.csproj", "{3B768727-D7DC-43D3-A5A3-720F5F180945}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C87D2E48-14A9-40DA-BA93-B14B3868B66E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C87D2E48-14A9-40DA-BA93-B14B3868B66E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C87D2E48-14A9-40DA-BA93-B14B3868B66E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C87D2E48-14A9-40DA-BA93-B14B3868B66E}.Debug|x64.Build.0 = Debug|Any CPU
+		{C87D2E48-14A9-40DA-BA93-B14B3868B66E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C87D2E48-14A9-40DA-BA93-B14B3868B66E}.Debug|x86.Build.0 = Debug|Any CPU
+		{C87D2E48-14A9-40DA-BA93-B14B3868B66E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C87D2E48-14A9-40DA-BA93-B14B3868B66E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C87D2E48-14A9-40DA-BA93-B14B3868B66E}.Release|x64.ActiveCfg = Release|Any CPU
+		{C87D2E48-14A9-40DA-BA93-B14B3868B66E}.Release|x64.Build.0 = Release|Any CPU
+		{C87D2E48-14A9-40DA-BA93-B14B3868B66E}.Release|x86.ActiveCfg = Release|Any CPU
+		{C87D2E48-14A9-40DA-BA93-B14B3868B66E}.Release|x86.Build.0 = Release|Any CPU
+		{3B768727-D7DC-43D3-A5A3-720F5F180945}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B768727-D7DC-43D3-A5A3-720F5F180945}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B768727-D7DC-43D3-A5A3-720F5F180945}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3B768727-D7DC-43D3-A5A3-720F5F180945}.Debug|x64.Build.0 = Debug|Any CPU
+		{3B768727-D7DC-43D3-A5A3-720F5F180945}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3B768727-D7DC-43D3-A5A3-720F5F180945}.Debug|x86.Build.0 = Debug|Any CPU
+		{3B768727-D7DC-43D3-A5A3-720F5F180945}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B768727-D7DC-43D3-A5A3-720F5F180945}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B768727-D7DC-43D3-A5A3-720F5F180945}.Release|x64.ActiveCfg = Release|Any CPU
+		{3B768727-D7DC-43D3-A5A3-720F5F180945}.Release|x64.Build.0 = Release|Any CPU
+		{3B768727-D7DC-43D3-A5A3-720F5F180945}.Release|x86.ActiveCfg = Release|Any CPU
+		{3B768727-D7DC-43D3-A5A3-720F5F180945}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C87D2E48-14A9-40DA-BA93-B14B3868B66E} = {D3E09356-6418-F4F5-DDE9-09D519799B74}
+		{3B768727-D7DC-43D3-A5A3-720F5F180945} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+	EndGlobalSection
+EndGlobal

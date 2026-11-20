@@ -1,51 +1,28 @@
-# ===== Сборка и результаты =====
+# build output
 dist/
-build/
-out/
-publish/
-*.exe
-*.dll
-*.pdb
-*.o
-*.obj
-*.res
-*.zip
-*.7z
-
-# ===== .NET (bot/, tests/) =====
 bin/
 obj/
+*.o
+*.exe
+*.pdb
 *.user
-*.suo
 .vs/
+.vscode/
+.idea/
+__pycache__/
 TestResults/
-
-# ===== Локальные инструменты =====
 .tools/
 
-# ===== Python (scripts/) =====
-__pycache__/
-*.pyc
-.venv/
-venv/
-
-# ===== Секреты и данные — НИКОГДА не в репозиторий =====
-.env
-*.env
+# runtime data — never commit (tokens, users, logs)
+data/
 config.json
 users.json
 control.token
-access_log.jsonl
-*.log
-data/
-*.pfx
-*.pem
-*.key
-signing/
-
-# ===== Редакторы и система =====
-.vscode/
-.idea/
-Thumbs.db
-desktop.ini
-.DS_Store
+*.config
+access_log.jsonl*
+tgdesk.log*
+tgdesk.pid
+app.ini
+cloudflared.exe
+avatar.jpg
+avatar.jpg.sha
