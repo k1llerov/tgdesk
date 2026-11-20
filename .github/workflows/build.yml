@@ -1,0 +1,100 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      # the key itself is passed only to the signing step
+      HAS_SIGNING_KEY: ${{ secrets.UPDATE_SIGNING_KEY != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: MinGW-w64 (MSYS2 UCRT64)
+        id: msys2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          install: mingw-w64-ucrt-x86_64-gcc
+          update: false
+
+      - name: Put g++ on PATH
+        shell: pwsh
+        run: Add-Content $env:GITHUB_PATH "${{ steps.msys2.outputs.msys2-location }}\ucrt64\bin"
+
+      - name: Version
+        id: ver
+        shell: pwsh
+        run: |
+          $base = (Get-Content VERSION -Raw).Trim()
+          if ($env:GITHUB_REF -like 'refs/tags/v*') {
+            $v = $env:GITHUB_REF_NAME.Substring(1)
+            if ($v -ne $base) { throw "Tag v$v does not match VERSION $base" }
+          } else { $v = "$base-dev.$env:GITHUB_RUN_NUMBER" }
+          "version=$v" >> $env:GITHUB_OUTPUT
+
+      - name: Translations complete
+        run: python scripts/i18n.py --check
+
+      - name: Tests
+        run: dotnet test tests/TgDesk.Tests/TgDesk.Tests.csproj -c Release
+
+      - name: Build
+        shell: pwsh
+        run: ./scripts/build.ps1 -Installer -Portable -Version ${{ steps.ver.outputs.version }}
+
+      - name: Checksums
+        shell: pwsh
+        run: Get-Content dist/SHA256SUMS.txt
+
+      # Installed TgDesk accepts an automatic update only if SHA256SUMS.txt is signed with the author's key
+      # (tools/UpdateSign). Add the private key as the repository secret UPDATE_SIGNING_KEY.
+      - name: Sign checksums (update signature)
+        if: env.HAS_SIGNING_KEY == 'true'
+        env:
+          UPDATE_SIGNING_KEY: ${{ secrets.UPDATE_SIGNING_KEY }}
+        run: |
+          dotnet run --project tools/UpdateSign -c Release -- sign dist/SHA256SUMS.txt
+          dotnet run --project tools/UpdateSign -c Release -- verify dist/SHA256SUMS.txt
+
+      - name: A release must be signed
+        if: startsWith(github.ref, 'refs/tags/v') && env.HAS_SIGNING_KEY != 'true'
+        shell: pwsh
+        run: throw "UPDATE_SIGNING_KEY secret is missing - users would not receive this update automatically"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TgDesk-${{ steps.ver.outputs.version }}
+          path: |
+            dist/TgDesk-*.exe
+            dist/TgDesk-*.zip
+            dist/SHA256SUMS.txt*
+
+      - name: Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          generate_release_notes: true
+          files: |
+            dist/TgDesk-*.exe
+            dist/TgDesk-*.zip
+            dist/SHA256SUMS.txt
+            dist/SHA256SUMS.txt.sig

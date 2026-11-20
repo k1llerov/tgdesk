@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TgDesk — журнал доступа</title>
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2Ij4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiM4YjVjZmYiLz48c3RvcCBvZmZzZXQ9Ii41NSIgc3RvcC1jb2xvcj0iIzRmN2JmZiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzIyZDNlZSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3QgeD0iOCIgeT0iOCIgd2lkdGg9IjI0MCIgaGVpZ2h0PSIyNDAiIHJ4PSI2MCIgZmlsbD0idXJsKCNnKSIvPgogIDxyZWN0IHg9IjQ0IiB5PSI2MCIgd2lkdGg9IjE2OCIgaGVpZ2h0PSIxMTIiIHJ4PSIxOCIgZmlsbD0iIzBmMTIyMCIgb3BhY2l0eT0iLjkyIi8+CiAgPHBhdGggZD0iTTgwIDk0IEwxMDggMTE2IEw4MCAxMzgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPHJlY3QgeD0iMTIwIiB5PSIxMjgiIHdpZHRoPSI0NCIgaGVpZ2h0PSIxMiIgcng9IjYiIGZpbGw9IiMyMmQzZWUiLz4KICA8cGF0aCBkPSJNMTEyIDE3MiBoMzIgbDggMjYgaC00OHoiIGZpbGw9IiMwZjEyMjAiIG9wYWNpdHk9Ii45MiIvPgogIDxyZWN0IHg9Ijg4IiB5PSIxOTQiIHdpZHRoPSI4MCIgaGVpZ2h0PSIxMiIgcng9IjYiIGZpbGw9IiMwZjEyMjAiIG9wYWNpdHk9Ii45MiIvPgo8L3N2Zz4K">
+<style>
+:root{--bg:#07080d;--card:rgba(255,255,255,.045);--card2:rgba(255,255,255,.075);--border:rgba(255,255,255,.09);--soft:rgba(255,255,255,.06);
+  --text:#eef1f8;--muted:#8c94a8;--grad:linear-gradient(135deg,#8b5cff 0%,#4f7bff 50%,#22d3ee 100%);--ok:#34d399;--bad:#fb7185;--warn:#fbbf24;--cyan:#22d3ee}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:
+  radial-gradient(60vmax 60vmax at -10% -20%,rgba(109,60,255,.28),transparent 60%),
+  radial-gradient(50vmax 50vmax at 110% 120%,rgba(14,165,233,.22),transparent 60%)}
+.wrap{max-width:1400px;margin:0 auto;padding:22px 26px 40px}
+header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+header img{width:52px;height:52px;border-radius:14px;box-shadow:0 0 0 2px rgba(139,92,255,.5),0 8px 30px -8px rgba(99,102,241,.8)}
+h1{margin:0;font-size:24px;font-weight:750;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--muted);font-size:13px;display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);animation:ping 2s infinite}
+.dot.off{background:var(--bad);animation:none}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(52,211,153,.55)}70%{box-shadow:0 0 0 8px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+.spacer{flex:1}
+.btn{border:1px solid var(--border);background:var(--card2);color:var(--text);border-radius:12px;padding:9px 14px;font:inherit;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;gap:6px;align-items:center;transition:transform .2s,background .2s}
+.btn:hover{background:rgba(255,255,255,.11)}.btn:active{transform:scale(.96)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px 16px}
+.stat b{display:block;font-size:26px;font-weight:750;margin-top:2px}
+.stat span{color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.6px}
+.stat.red b{color:var(--bad)}.stat.cyan b{color:var(--cyan)}
+.live{display:none;align-items:center;gap:12px;padding:12px 16px;border-radius:16px;margin-bottom:14px;
+  background:linear-gradient(90deg,rgba(251,113,133,.16),rgba(139,92,255,.10));border:1px solid rgba(251,113,133,.4)}
+.live.on{display:flex;animation:in .4s ease}
+.live i{width:10px;height:10px;border-radius:50%;background:var(--bad);animation:blink 1s steps(1) infinite;flex:none}
+@keyframes blink{50%{opacity:.25}} @keyframes in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.tools{display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.chip{border:1px solid var(--border);background:var(--card);color:var(--muted);border-radius:20px;padding:7px 13px;font:inherit;font-size:13px;cursor:pointer}
+.chip.active{background:rgba(139,92,255,.22);border-color:rgba(139,92,255,.6);color:var(--text)}
+.search{flex:1;min-width:220px;padding:9px 14px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--text);font:inherit;outline:none}
+.search:focus{border-color:rgba(139,92,255,.6)}
+.table{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);font-weight:600;padding:11px 14px;background:rgba(255,255,255,.03);position:sticky;top:0}
+td{padding:10px 14px;border-top:1px solid var(--border);vertical-align:top}
+tr.new td{animation:flash 2.2s ease}
+@keyframes flash{0%{background:rgba(34,211,238,.18)}100%{background:transparent}}
+tr.deny td{background:rgba(251,113,133,.07)}
+tr.deny .ev{color:var(--bad)}
+.t{white-space:nowrap}.t small{display:block;color:var(--muted);font-size:12px}
+.ev{font-weight:600}.ev small{display:block;color:var(--muted);font-weight:400;font-size:12.5px;word-break:break-all}
+.ic{display:inline-block;width:22px}
+.who small,.ip small,.place small,.dev small{display:block;color:var(--muted);font-size:12px}
+.ip code{font-family:Consolas,ui-monospace,monospace;font-size:13px}
+.badge{display:inline-block;font-size:11px;padding:1px 7px;border-radius:10px;margin-left:6px;background:rgba(251,191,36,.18);color:var(--warn);font-weight:600}
+.empty{padding:50px;text-align:center;color:var(--muted)}
+.foot{margin-top:12px;color:var(--muted);font-size:12.5px}
+@media (max-width:900px){.stats{grid-template-columns:repeat(2,1fr)} th:nth-child(6),td:nth-child(6){display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2Ij4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiM4YjVjZmYiLz48c3RvcCBvZmZzZXQ9Ii41NSIgc3RvcC1jb2xvcj0iIzRmN2JmZiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzIyZDNlZSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3QgeD0iOCIgeT0iOCIgd2lkdGg9IjI0MCIgaGVpZ2h0PSIyNDAiIHJ4PSI2MCIgZmlsbD0idXJsKCNnKSIvPgogIDxyZWN0IHg9IjQ0IiB5PSI2MCIgd2lkdGg9IjE2OCIgaGVpZ2h0PSIxMTIiIHJ4PSIxOCIgZmlsbD0iIzBmMTIyMCIgb3BhY2l0eT0iLjkyIi8+CiAgPHBhdGggZD0iTTgwIDk0IEwxMDggMTE2IEw4MCAxMzgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPHJlY3QgeD0iMTIwIiB5PSIxMjgiIHdpZHRoPSI0NCIgaGVpZ2h0PSIxMiIgcng9IjYiIGZpbGw9IiMyMmQzZWUiLz4KICA8cGF0aCBkPSJNMTEyIDE3MiBoMzIgbDggMjYgaC00OHoiIGZpbGw9IiMwZjEyMjAiIG9wYWNpdHk9Ii45MiIvPgogIDxyZWN0IHg9Ijg4IiB5PSIxOTQiIHdpZHRoPSI4MCIgaGVpZ2h0PSIxMiIgcng9IjYiIGZpbGw9IiMwZjEyMjAiIG9wYWNpdHk9Ii45MiIvPgo8L3N2Zz4K" alt="">
+    <div>
+      <h1>Журнал доступа TgDesk</h1>
+      <div class="sub"><span class="dot" id="dot"></span><span id="status">загрузка…</span></div>
+    </div>
+    <div class="spacer"></div>
+    <a class="btn" href="/api/log.csv" download="tgdesk_access_log.csv">⬇ Экспорт CSV</a>
+  </header>
+
+  <div class="live" id="live"><i></i><div><b>Сейчас идёт трансляция экрана</b><div id="liveWho" style="color:var(--muted);font-size:13px"></div></div></div>
+
+  <div class="stats">
+    <div class="stat"><span>Событий сегодня</span><b id="sToday">–</b></div>
+    <div class="stat cyan"><span>Разных IP сегодня</span><b id="sIps">–</b></div>
+    <div class="stat"><span>Трансляций сегодня</span><b id="sStreams">–</b></div>
+    <div class="stat red"><span>Отказов в доступе</span><b id="sDenied">–</b></div>
+  </div>
+
+  <div class="tools">
+    <button class="chip active" data-f="all">Все</button>
+    <button class="chip" data-f="auth">🔑 Входы</button>
+    <button class="chip" data-f="stream">🔴 Трансляции</button>
+    <button class="chip" data-f="control">🎛 Управление</button>
+    <button class="chip" data-f="files">📁 Файлы</button>
+    <button class="chip" data-f="chat">💬 Чат</button>
+    <button class="chip" data-f="deny">⛔ Отказы</button>
+    <button class="chip" data-f="system">🟢 Система</button>
+    <input class="search" id="q" placeholder="Поиск: IP, устройство, город, действие…">
+  </div>
+
+  <div class="table">
+    <table>
+      <thead><tr><th>Когда</th><th>Событие</th><th>Кто</th><th>IP</th><th>Где</th><th>Устройство</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="empty" id="empty" style="display:none">Пока пусто</div>
+  </div>
+  <div class="foot">Страница доступна только с этого компьютера (127.0.0.1) и не публикуется через туннель. Журнал хранится в <code>access_log.jsonl</code> в папке данных TgDesk. Место определяется по IP приблизительно; если на телефоне включён VPN — будет место VPN-сервера.</div>
+</div>
+
+<script>
+const ICON = {auth:'🔑', view:'👁', control:'🎛', stream:'🔴', files:'📁', power:'⚡', chat:'💬', deny:'⛔', system:'🟢'};
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let items = [], lastId = 0, filter = 'all', first = true;
+const $ = s => document.querySelector(s);
+/* ================= i18n: Russian source text → English (see docs/TRANSLATING.md) ================= */
+const I18N_EN = {"TgDesk — журнал доступа": "TgDesk — access log", "Журнал доступа TgDesk": "TgDesk access log", "загрузка…": "loading…", "⬇ Экспорт CSV": "⬇ Export CSV", "Сейчас идёт трансляция экрана": "The screen is being streamed now", "Событий сегодня": "Events today", "Разных IP сегодня": "Different IPs today", "Трансляций сегодня": "Streams today", "Отказов в доступе": "Access denied", "Все": "All", "🔑 Входы": "🔑 Logins", "🔴 Трансляции": "🔴 Streams", "🎛 Управление": "🎛 Control", "📁 Файлы": "📁 Files", "💬 Чат": "💬 Chat", "⛔ Отказы": "⛔ Denied", "🟢 Система": "🟢 System", "Когда": "When", "Событие": "Event", "Кто": "Who", "Где": "Where", "Устройство": "Device", "Пока пусто": "Nothing yet", "Страница доступна только с этого компьютера (127.0.0.1) и не публикуется через туннель. Журнал хранится в": "This page is available only on this computer (127.0.0.1) and is not published through the tunnel. The log is stored in", "в папке данных TgDesk. Место определяется по IP приблизительно; если на телефоне включён VPN — будет место VPN-сервера.": "in the TgDesk data folder. The place is estimated from the IP; with a VPN on the phone it shows the VPN server location.", "Поиск: IP, устройство, город, действие…": "Search: IP, device, city, action…", "{0} с назад": "{0} s ago", "{0} мин назад": "{0} min ago", "{0} ч назад": "{0} h ago", "{0} дн назад": "{0} d ago", "<span class=\"badge\">новый</span>": "<span class=\"badge\">new</span>", "<span style=\"color:var(--muted)\">через Telegram</span>": "<span style=\"color:var(--muted)\">via Telegram</span>", "бот работает · {0} · обновлено {1}": "bot is running · {0} · updated {1}", "бот не отвечает — возможно, остановлен": "the bot does not respond — maybe it is stopped"};
+let LANG = (() => { let s = ''; try{ s = localStorage.getItem('tgdesk_pc_lang') || ''; }catch(e){} if (s === 'ru' || s === 'en') return s;
+  return /^(ru|uk|be|kk)/i.test(navigator.language || '') ? 'ru' : 'en'; })();
+document.documentElement.lang = LANG;
+function t(s, ...a){ let r = (LANG === 'en' && I18N_EN[s] !== undefined) ? I18N_EN[s] : s; a.forEach((v, i) => { r = r.split('{' + i + '}').join(v); }); return r; }
+function translateDom(root){
+  if (LANG === 'ru') return;
+  const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: n => (n.parentNode && /^(SCRIPT|STYLE)$/.test(n.parentNode.nodeName)) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT });
+  const nodes = []; while (w.nextNode()) nodes.push(w.currentNode);
+  nodes.forEach(n => { const s = n.nodeValue.trim(); if (s && I18N_EN[s] !== undefined) n.nodeValue = n.nodeValue.replace(s, I18N_EN[s]); });
+  root.querySelectorAll('[placeholder],[title],[aria-label],[data-confirm],[alt]').forEach(el => {
+    ['placeholder', 'title', 'aria-label', 'data-confirm', 'alt'].forEach(a => { const v = el.getAttribute(a); if (v && I18N_EN[v.trim()] !== undefined) el.setAttribute(a, I18N_EN[v.trim()]); });
+  });
+  document.title = t(document.title);
+}
+translateDom(document.body);
+
+function ago(ts){
+  const s = Math.max(0, Math.floor(Date.now()/1000 - ts));
+  if (s < 60) return t('{0} с назад', s); if (s < 3600) return t('{0} мин назад', Math.floor(s/60));
+  if (s < 86400) return t('{0} ч назад', Math.floor(s/3600)); return t('{0} дн назад', Math.floor(s/86400));
+}
+function dur(s){ const m = Math.floor(s/60), h = Math.floor(m/60); return (h ? h + ':' : '') + String(m%60).padStart(2,'0') + ':' + String(s%60).padStart(2,'0'); }
+function match(e){
+  if (filter !== 'all') {
+    if (filter === 'control' ? !['control','power','view'].includes(e.cat) : e.cat !== filter) return false;
+  }
+  const q = $('#q').value.trim().toLowerCase();
+  if (!q) return true;
+  return [e.action, e.detail, e.user, e.ip, e.place, e.isp, e.device, e.time].join(' ').toLowerCase().includes(q);
+}
+function row(e, isNew){
+  const [d, t] = String(e.time).split(' ');
+  return `<tr class="${e.cat==='deny'?'deny':''} ${isNew?'new':''}">
+    <td class="t">${esc(t)}<small>${esc(d)} · ${ago(e.ts)}</small></td>
+    <td class="ev"><span class="ic">${ICON[e.cat]||'•'}</span>${esc(e.action)}${e.detail?`<small>${esc(e.detail)}</small>`:''}</td>
+    <td class="who">${e.user?esc(e.user):'<span style="color:var(--muted)">—</span>'}${e.uid?`<small>ID ${esc(e.uid)}</small>`:''}</td>
+    <td class="ip">${e.ip?`<code>${esc(e.ip)}</code>${e.new_ip?t('<span class="badge">новый</span>'):''}`:t('<span style="color:var(--muted)">через Telegram</span>')}</td>
+    <td class="place">${esc(e.place||'—')}${e.isp?`<small>${esc(e.isp)}</small>`:''}</td>
+    <td class="dev">${esc(e.device||'—')}</td>
+  </tr>`;
+}
+let newIds = new Set();
+function render(){
+  const list = items.filter(match).slice(-800).reverse();
+  $('#rows').innerHTML = list.map(e => row(e, newIds.has(e.id))).join('');
+  $('#empty').style.display = list.length ? 'none' : 'block';
+  newIds.clear();
+}
+async function poll(){
+  try{
+    const r = await fetch('/api/log?after=' + lastId); const d = await r.json();
+    if (d.items.length) {
+      if (!first) d.items.forEach(e => newIds.add(e.id));
+      items = items.concat(d.items); if (items.length > 5000) items = items.slice(-5000);
+      lastId = d.items[d.items.length-1].id;
+    }
+    // update already shown records (the place of an IP arrives a bit later)
+    if (d.updates) d.updates.forEach(u => { const e = items.find(x => x.id === u.id); if (e) Object.assign(e, u); });
+    $('#sToday').textContent = d.stats.today; $('#sIps').textContent = d.stats.ips;
+    $('#sStreams').textContent = d.stats.streams; $('#sDenied').textContent = d.stats.denied;
+    const live = d.active || [];
+    $('#live').classList.toggle('on', live.length > 0);
+    $('#liveWho').innerHTML = live.map(a => `${esc(a.who)} · ${dur(a.seconds)}`).join('<br>');
+    $('#dot').classList.remove('off');
+    $('#status').textContent = t('бот работает · {0} · обновлено {1}', d.host, new Date().toLocaleTimeString(LANG === 'ru' ? 'ru-RU' : 'en-GB'));
+    if (d.lang && d.lang !== LANG) { try{ localStorage.setItem('tgdesk_pc_lang', d.lang); }catch(e){} location.reload(); return; }
+    render(); first = false;
+  }catch(e){ $('#dot').classList.add('off'); $('#status').textContent = t('бот не отвечает — возможно, остановлен'); }
+}
+document.querySelectorAll('.chip').forEach(c => c.onclick = () => {
+  document.querySelectorAll('.chip').forEach(x => x.classList.toggle('active', x === c)); filter = c.dataset.f; render();
+});
+$('#q').addEventListener('input', render);
+poll(); setInterval(poll, 2000);
+</script>
+</body>
+</html>

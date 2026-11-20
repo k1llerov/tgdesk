@@ -1,0 +1,27 @@
+#include <windows.h>
+
+1 ICON "tgdesk.ico"
+1 24 "app.manifest"
+
+1 VERSIONINFO
+FILEVERSION 1,0,0,0
+PRODUCTVERSION 1,0,0,0
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040904B0"
+    BEGIN
+      VALUE "CompanyName", "k1llerov™"
+      VALUE "FileDescription", "TgDesk - control your PC from Telegram"
+      VALUE "ProductName", "TgDesk"
+      VALUE "FileVersion", "1.0.0"
+      VALUE "ProductVersion", "1.0.0"
+      VALUE "LegalCopyright", "© 2026 k1llerov™, MIT License"
+      VALUE "OriginalFilename", "TgDesk.exe"
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x0409, 1200
+  END
+END
